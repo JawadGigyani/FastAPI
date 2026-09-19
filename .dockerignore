@@ -1,0 +1,5 @@
+# Keep secrets and local files out of the image
+.env
+venv
+outputs
+__pycache__
