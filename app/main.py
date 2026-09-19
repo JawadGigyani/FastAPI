@@ -28,10 +28,11 @@ app.mount("/audio", StaticFiles(directory=OUTPUT_DIR), name="audio")
 
 # Create a narrated story  ->  POST /story
 # REQUEST BODY (JSON): {"topic": "a robot who learns to paint"}
+# RESPONSE: {"story": "...", "audio": "<mp3 as base64>"}
 @app.post("/story")
 def create_story(body: StoryRequest):
     result = graph.invoke({"topic": body.topic, "voice_id": body.voice_id})
-    return {"story": result["story"], "audio_url": f"/audio/{result['audio_file']}"}
+    return {"story": result["story"], "audio": result["audio"]}
 
 
 # Get all generated audio files  ->  GET /files

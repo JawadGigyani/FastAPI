@@ -7,4 +7,4 @@ class StoryState(TypedDict):
     topic: str       # input from the user
     voice_id: str    # input from the user
     story: str       # filled by the write_story node
-    audio_file: str  # filled by the narrate_story node
+    audio: str       # filled by the narrate_story node (base64 mp3)

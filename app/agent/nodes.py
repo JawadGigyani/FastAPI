@@ -15,7 +15,7 @@ def write_story(state: StoryState):
     return {"story": response.text}
 
 
-# NODE 2: ElevenLabs reads the story out loud and saves it as an mp3
+# NODE 2: ElevenLabs reads the story out loud (mp3 as base64 text)
 def narrate_story(state: StoryState):
-    audio_file = text_to_speech(state["story"], state["voice_id"])
-    return {"audio_file": audio_file}
+    audio = text_to_speech(state["story"], state["voice_id"])
+    return {"audio": audio}

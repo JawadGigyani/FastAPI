@@ -1,8 +1,8 @@
-from datetime import datetime
+import base64
 
 from elevenlabs.client import ElevenLabs
 
-from app.config import OUTPUT_DIR, TTS_MODEL
+from app.config import TTS_MODEL
 
 # Reads ELEVENLABS_API_KEY from the environment automatically
 client = ElevenLabs()
@@ -17,9 +17,7 @@ def text_to_speech(text: str, voice_id: str) -> str:
         output_format="mp3_44100_128",
     )
 
-    # Write the chunks into an mp3 file and return its name
-    file_name = f"story_{datetime.now():%Y%m%d_%H%M%S}.mp3"
-    with open(OUTPUT_DIR / file_name, "wb") as f:
-        for chunk in audio:
-            f.write(chunk)
-    return file_name
+    # Join the chunks and return the mp3 as base64 text.
+    # We don't save a file because Vercel's filesystem is read-only.
+    mp3_bytes = b"".join(audio)
+    return base64.b64encode(mp3_bytes).decode()
